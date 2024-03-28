@@ -19,9 +19,9 @@ import java.util.UUID;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private long id;
     private String name;
-    @UniqueElements
+    @Column(unique = true)
     private String article;
     private String description;
     @Enumerated(EnumType.STRING)
