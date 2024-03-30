@@ -1,5 +1,6 @@
 package com.example.demo.storage.models;
 
+import com.example.demo.storage.dto.ProductDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.UniqueElements;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -28,6 +30,27 @@ public class Product {
     private Category category;
     private long count;
     private double price;
-    private Date date_last_change;
-    private Date date_create;
+    private LocalDateTime date_last_change;
+    private LocalDateTime date_create;
+
+    public static Product fromDTO(ProductDTO productDTO) {
+        return Product.builder()
+                .name(productDTO.getName())
+                .article(productDTO.getArticle())
+                .description(productDTO.getDescription())
+                .category(productDTO.getCategory())
+                .count(productDTO.getCount())
+                .price(productDTO.getPrice())
+                .build();
+    }
+    @PrePersist
+    public void prePersist() {
+        this.date_create = LocalDateTime.now();
+        this.date_last_change = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.date_last_change = LocalDateTime.now();
+    }
 }

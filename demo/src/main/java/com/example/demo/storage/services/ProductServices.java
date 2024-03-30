@@ -1,5 +1,6 @@
 package com.example.demo.storage.services;
 
+import com.example.demo.storage.dto.ProductDTO;
 import com.example.demo.storage.models.Product;
 import com.example.demo.storage.repositories.ProductRepository;
 import lombok.AllArgsConstructor;
@@ -26,14 +27,16 @@ public class ProductServices implements IProductServices  {
     }
 
     @Override
-    public Product create(Product product) {
-        return productRepository.save(product);
+    public ResponseEntity<Product>  create(ProductDTO productDTO) {
+        Product product = Product.fromDTO(productDTO);
+        return ResponseEntity.ok(productRepository.save(product));
     }
 
     @Override
-    public ResponseEntity<Product> update(Product product, UUID id) {
+    public ResponseEntity<Product> update(ProductDTO productDTO, UUID id) {
         Optional<Product> existingProduct = productRepository.findById(id);
         if(existingProduct.isPresent()){
+            Product product = Product.fromDTO(productDTO);
             product.setId(id);
             Product savedProduct = productRepository.save(product);
             return ResponseEntity.ok(savedProduct);

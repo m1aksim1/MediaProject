@@ -1,5 +1,6 @@
 package com.example.demo.storage.controllers;
 
+import com.example.demo.storage.dto.ProductDTO;
 import com.example.demo.storage.models.Product;
 import com.example.demo.storage.repositories.ProductRepository;
 import com.example.demo.storage.services.ProductServices;
@@ -25,7 +26,7 @@ public class ProductController {
         return productRepository.findAll();
     }
     @PostMapping
-    public ResponseEntity create(@RequestBody Product product){
+    public ResponseEntity create(@RequestBody ProductDTO product){
         return ResponseEntity.status(201).body(productService.create(product));
     }
     @GetMapping("/read/{id}")
@@ -33,7 +34,7 @@ public class ProductController {
         return ResponseEntity.ok(productRepository.getById(id));
     }
     @GetMapping("/update/{id}")
-    public ResponseEntity update(@RequestBody Product product, @PathVariable UUID id){
+    public ResponseEntity update(@RequestBody ProductDTO product, @PathVariable UUID id){
         return ResponseEntity.status(201).body(productService.update(product,id));
     }
     @GetMapping("/delete/{id}")
