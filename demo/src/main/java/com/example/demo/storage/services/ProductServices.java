@@ -38,6 +38,7 @@ public class ProductServices implements IProductServices  {
         if(existingProduct.isPresent()){
             Product product = Product.fromDTO(productDTO);
             product.setId(id);
+            product.setDate_create(existingProduct.get().getDate_create());
             Product savedProduct = productRepository.save(product);
             return ResponseEntity.ok(savedProduct);
         } else {

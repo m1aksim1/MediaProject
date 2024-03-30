@@ -25,15 +25,15 @@ public class ProductController {
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity create(@RequestBody ProductDTO product){
         return ResponseEntity.status(201).body(productService.create(product));
     }
     @GetMapping("/read/{id}")
     public ResponseEntity read(@PathVariable UUID id){
-        return ResponseEntity.ok(productRepository.getById(id));
+        return ResponseEntity.ok(productRepository.findById(id));
     }
-    @GetMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity update(@RequestBody ProductDTO product, @PathVariable UUID id){
         return ResponseEntity.status(201).body(productService.update(product,id));
     }
