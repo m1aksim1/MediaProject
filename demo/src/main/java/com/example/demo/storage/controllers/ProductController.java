@@ -1,5 +1,6 @@
 package com.example.demo.storage.controllers;
 
+import com.example.demo.handler.exceptions.InvalidPriceException;
 import com.example.demo.storage.dto.ProductDTO;
 import com.example.demo.storage.models.Product;
 import com.example.demo.storage.repositories.ProductRepository;
@@ -31,7 +32,7 @@ public class ProductController {
     }
     @GetMapping("/read/{id}")
     public ResponseEntity read(@PathVariable UUID id){
-        return ResponseEntity.ok(productRepository.findById(id));
+        return ResponseEntity.ok(productService.read(id));
     }
     @PutMapping("/update/{id}")
     public ResponseEntity update(@RequestBody ProductDTO product, @PathVariable UUID id){
